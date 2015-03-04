@@ -1,4 +1,4 @@
-# Dockerfile for RAML API Designter
+# Dockerfile for Swagger Editor
 FROM ubuntu:latest
 MAINTAINER Victor Hernandez <victor.hernandez@byteflair.com>
 
