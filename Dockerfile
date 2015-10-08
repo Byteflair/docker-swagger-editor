@@ -1,5 +1,5 @@
 # Dockerfile for Swagger Editor
-# Updated 20150430
+# Updated 20151008
 FROM ubuntu:latest
 MAINTAINER Victor Hernandez <victor.hernandez@byteflair.com>
 
@@ -12,6 +12,13 @@ RUN apt-get install -y git nodejs npm
 
 RUN ln -s /usr/bin/nodejs /usr/bin/node
 
+# Create a regular user account and switch to it
+RUN adduser --disabled-password --gecos '' swagger-editor
+RUN adduser swagger-editor sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+USER swagger-editor
+WORKDIR /home/swagger-editor
+
 # Install Swagger editor
 RUN git clone https://github.com/swagger-api/swagger-editor.git swagger-editor
 
@@ -20,6 +27,6 @@ RUN sed -i 's/localhost/0.0.0.0/g' grunt/connect.js
 RUN npm install
 
 # Expose ports
-EXPOSE 9000
+EXPOSE 8080
 
 CMD cd /swagger-editor; npm start
